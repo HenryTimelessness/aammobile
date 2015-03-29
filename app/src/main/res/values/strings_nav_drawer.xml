@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_section1">Parcels</string>
+    <string name="title_section2">Profile</string>
+    <string name="title_section3">Account Settings</string>
+
+    <string name="title_section4">LOCATIONS</string>
+    <string name="title_section5">GETTING STARTED</string>
+    <string name="title_section6">CONTACT US</string>
+    <string name="title_section7">FAQ</string>
+    <string name="navigation_drawer_open">nav open</string>
+    <string name="navigation_drawer_close">nav close</string>
+</resources>
