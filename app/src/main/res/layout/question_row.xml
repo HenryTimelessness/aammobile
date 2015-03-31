@@ -13,6 +13,7 @@
         <View style="@style/GrayDividerBig" />
 
         <LinearLayout
+            android:id="@+id/parcel_card_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -23,6 +24,7 @@
                 android:layout_margin="6dp">
 
                 <ImageView
+                    android:id="@+id/icon_parcel_time_left"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
@@ -42,65 +44,22 @@
                     android:layout_centerVertical="true"
                     android:layout_toEndOf="@+id/icon_parcel_time_left"
                     android:layout_toRightOf="@+id/icon_parcel_time_left"
-                    android:text="PANAS"
+                    android:text="Question?"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textColor="@android:color/holo_blue_dark" />
             </RelativeLayout>
 
             <View style="@style/GrayDivider" />
 
-            <RelativeLayout
+            <EditText
+                android:id="@+id/questions_question_answer_text"
+                android:layout_margin="6dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="6dp">
-
-                <ImageView
-                    android:id="@+id/image_parcel_coy_logo"
-                    android:scaleType="fitCenter"
-                    android:adjustViewBounds="true"
-                    android:layout_width="70dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:padding="2dp"
-                    android:src="@drawable/placeholder" />
-
-                <TableLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:shrinkColumns="1"
-                    android:stretchColumns="1"
-                    android:padding="6dp"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_toRightOf="@+id/image_parcel_coy_logo"
-                    android:layout_toEndOf="@+id/image_parcel_coy_logo">
-
-                    <TableRow>
-
-                        <TextView
-                            android:id="@+id/parcel_location_title"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Number of Questions:"
-                            android:textAppearance="?android:attr/textAppearanceSmall" />
-
-                        <EditText
-                            android:id="@+id/questions_question_answer_text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="end"
-                            android:textAlignment="gravity"
-                            android:text="Unable to get Number"
-                            android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:textStyle="bold" />
-                    </TableRow>
-
-                </TableLayout>
-
-            </RelativeLayout>
+                android:textAlignment="gravity"
+                android:hint="Type your answer"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textStyle="bold" />
 
         </LinearLayout>
 

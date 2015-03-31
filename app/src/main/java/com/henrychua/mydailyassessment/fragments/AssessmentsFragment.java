@@ -24,6 +24,8 @@ import com.henrychua.mydailyassessment.fragments.NavFragment;
 import com.henrychua.mydailyassessment.models.Assessment;
 import com.henrychua.mydailyassessment.models.Customer;
 import com.henrychua.mydailyassessment.models.Question;
+import com.orm.query.Condition;
+import com.orm.query.Select;
 
 /**
  * A simple {\@link android.app.Fragment} subclass.
@@ -83,10 +85,18 @@ public class AssessmentsFragment extends NavFragment implements AssessmentsViewA
         //create test data
         listOfAssessment = new ArrayList<Assessment>();
         List<Question> questions = new ArrayList<Question>();
-        questions.add(new Question("Titlez", "Some qns", Question.ANSWER_RATING, 10.0, 5.0, null, null, 0, false));
-        questions.add(new Question("Titlez2", "Some qns2", Question.ANSWER_RATING, 10.0, 5.0, null, null, 0, false));
-        listOfAssessment.add(new Assessment("PANAS", questions, true, true, new Customer("Chua", 123456789, "string@string.com", null), new Date()));
-        listOfAssessment.add(new Assessment("PANASShort", questions, true, true, new Customer("Chua", 123456789, "string@string.com", null), new Date()));
+
+        questions.add(new Question("Titlez", "Some qns", Question.ANSWER_RATING, 10.0, 5.0, null, null, 0, false, null));
+        questions.add(new Question("Titlez2", "Some qns2", Question.ANSWER_RATING, 10.0, 5.0, null, null, 0, false, null));
+        Assessment assessment1 = new Assessment("PANAS", questions, true, true, new Customer("Chua", 123456789, "string@string.com", null), new Date());
+        Assessment assessment2 = new Assessment("PANASShort", questions, true, true, new Customer("Chua", 123456789, "string@string.com", null), new Date());
+        listOfAssessment.add(assessment1);
+        listOfAssessment.add(assessment2);
+        listOfAssessment.get(0).save();
+        List<Assessment> savedAssessments = Select.from(Assessment.class)
+//                .where(Condition.prop("is_answered").eq(true))
+                .list();
+        listOfAssessment.add(savedAssessments.get(0));
         onRefreshComplete(listOfAssessment);
 
         return inflatedView;

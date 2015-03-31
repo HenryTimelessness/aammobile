@@ -14,15 +14,18 @@ import java.util.List;
  */
 public class Assessment extends SugarRecord<Assessment> implements Parcelable {
     private String title;
-    private List<Question> questionList;
     private boolean isAnswered;
     private boolean isExported;
     private Customer customer;
     private Date dateAnswered;
 
+    public Assessment() {
+        //required empty constructor
+    }
+
     public Assessment(String title, List<Question> questionList, boolean isAnswered, boolean isExported, Customer customer, Date dateAnswered) {
         this.title = title;
-        this.questionList = questionList;
+        this.setQuestionList(questionList);
         this.isAnswered = isAnswered;
         this.isExported = isExported;
         this.customer = customer;
@@ -30,11 +33,12 @@ public class Assessment extends SugarRecord<Assessment> implements Parcelable {
     }
 
     public void addQuestion(Question question) {
-        this.questionList.add(question);
+        question.setAssessment(this);
+        question.save();
     }
 
     public void deleteQuestion(Question question) {
-        this.questionList.remove(question);
+        question.delete();
     }
 
     public String getTitle() {
@@ -46,11 +50,15 @@ public class Assessment extends SugarRecord<Assessment> implements Parcelable {
     }
 
     public List<Question> getQuestionList() {
-        return questionList;
+        return Question.find(Question.class, "assessment = ?", String.valueOf(this.getId()));
+
     }
 
     public void setQuestionList(List<Question> questionList) {
-        this.questionList = questionList;
+        for (Question question : questionList) {
+            question.setAssessment(this);
+            question.save();
+        }
     }
 
     public boolean isAnswered() {
@@ -93,7 +101,6 @@ public class Assessment extends SugarRecord<Assessment> implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.title);
-        dest.writeList(this.questionList);
         dest.writeByte(isAnswered ? (byte) 1 : (byte) 0);
         dest.writeByte(isExported ? (byte) 1 : (byte) 0);
         dest.writeParcelable(this.customer, 0);
@@ -102,8 +109,6 @@ public class Assessment extends SugarRecord<Assessment> implements Parcelable {
 
     private Assessment(Parcel in) {
         this.title = in.readString();
-        this.questionList = new ArrayList<Question>();
-        in.readList(this.questionList, null);
         this.isAnswered = in.readByte() != 0;
         this.isExported = in.readByte() != 0;
         this.customer = in.readParcelable(Customer.class.getClassLoader());

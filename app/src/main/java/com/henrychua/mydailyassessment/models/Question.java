@@ -22,8 +22,13 @@ public class Question extends SugarRecord<Question> {
     private List<String> multipleChoiceAnswers;
     private int selectedMultipleAnswer; //1 or 2 for yes no
     private boolean isAnswered;
+    private Assessment assessment;
 
-    public Question(String title, String content, int answerType, double ratingRange, double ratingAnswer, String openEndedAnswer, List<String> multipleChoiceAnswers, int selectedMultipleAnswer, boolean isAnswered) {
+    public Question() {
+        //required empty constructor
+    }
+
+    public Question(String title, String content, int answerType, double ratingRange, double ratingAnswer, String openEndedAnswer, List<String> multipleChoiceAnswers, int selectedMultipleAnswer, boolean isAnswered, Assessment assessment) {
         this.title = title;
         this.content = content;
         this.answerType = answerType;
@@ -33,6 +38,23 @@ public class Question extends SugarRecord<Question> {
         this.multipleChoiceAnswers = multipleChoiceAnswers;
         this.selectedMultipleAnswer = selectedMultipleAnswer;
         this.isAnswered = isAnswered;
+        this.assessment = assessment;
+
+    }
+    public double getRatingAnswer() {
+        return ratingAnswer;
+    }
+
+    public void setRatingAnswer(double ratingAnswer) {
+        this.ratingAnswer = ratingAnswer;
+    }
+
+    public Assessment getAssessment() {
+        return assessment;
+    }
+
+    public void setAssessment(Assessment assessment) {
+        this.assessment = assessment;
     }
 
     public void answerMultipleChoice(int selectedAnswer) {

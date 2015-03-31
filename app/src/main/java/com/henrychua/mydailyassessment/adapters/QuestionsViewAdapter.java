@@ -47,18 +47,18 @@ public class QuestionsViewAdapter extends RecyclerView.Adapter<QuestionsViewAdap
     @Override
     public int getItemViewType(int position) {
         int viewType = 0;
-        if (position == POSITION_QUESTION) {
-            viewType = VIEW_TYPE_QUESTION;
-        }
+        viewType = VIEW_TYPE_QUESTION;
+        //TODO: logicz to determine view type based on question type
         return viewType;
     }
     
     @Override
     public void onBindViewHolder(QuestionViewHolder questionViewHolder, final int position) {
+        Question questionInRow = questions.get(position);
         if (position == POSITION_QUESTION) {
-            QuestionRow  QuestionRow  = (QuestionRow ) questionViewHolder;
+            QuestionRow QuestionRow = (QuestionRow) questionViewHolder;
             //TODO: bind your model data to the views. make sure views are inited e.g.
-            // QuestionRow.vTimeLeft.setText("Times up");
+            QuestionRow.vQuestionContent.setText(questionInRow.getContent());
 
             //TODO: change null to the view that you need to work with
             mListener.onQuestionViewInit(null);
@@ -68,9 +68,9 @@ public class QuestionsViewAdapter extends RecyclerView.Adapter<QuestionsViewAdap
                 }
             });
         } else {
-            QuestionRow  QuestionRow  = (QuestionRow ) questionViewHolder;
+            QuestionRow QuestionRow = (QuestionRow) questionViewHolder;
             //TODO: bind your model data to the views. make sure views are inited e.g.
-            // QuestionRow.vTimeLeft.setText("Times up");
+            QuestionRow.vQuestionContent.setText(questionInRow.getContent());
 
             //TODO: change null to the view that you need to work with
             mListener.onQuestionViewInit(null);

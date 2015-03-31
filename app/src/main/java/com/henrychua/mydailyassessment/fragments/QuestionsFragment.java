@@ -10,16 +10,16 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.Button;
 
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Date;
 import java.util.List;
 
 import com.henrychua.mydailyassessment.R;
 import com.henrychua.mydailyassessment.adapters.QuestionsViewAdapter;
-import com.henrychua.mydailyassessment.fragments.NavFragment;
 import com.henrychua.mydailyassessment.models.Assessment;
+import com.henrychua.mydailyassessment.models.Customer;
 import com.henrychua.mydailyassessment.models.Question;
 
 /**
@@ -45,7 +45,7 @@ public class QuestionsFragment extends NavDetailsFragment implements QuestionsVi
      */
     private List<Question> listOfQuestion;
 
-    private Assessment assessment;
+    private Assessment mAssessment;
 
     /**
      * View reference to Question's recyclerView
@@ -54,6 +54,8 @@ public class QuestionsFragment extends NavDetailsFragment implements QuestionsVi
 
     View mEmptyView;
     View mQuestionView;
+
+    Button mSaveButton;
 
     /**
      * Use this to instantiate the QuestionsFragment
@@ -65,7 +67,7 @@ public class QuestionsFragment extends NavDetailsFragment implements QuestionsVi
         QuestionsFragment myFragment = new QuestionsFragment();
 
         Bundle args = new Bundle();
-        args.putParcelable("assessment", assessment);
+        args.putParcelable("mAssessment", assessment);
         myFragment.setArguments(args);
 
         return myFragment;
@@ -86,7 +88,7 @@ public class QuestionsFragment extends NavDetailsFragment implements QuestionsVi
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         Bundle bundle = this.getArguments();
-        this.assessment = bundle.getParcelable("assessment");
+        this.mAssessment = bundle.getParcelable("mAssessment");
 
         View inflatedView = inflater.inflate(R.layout.fragment_question, container, false);
         mRecyclerViewList = (RecyclerView) inflatedView.findViewById(R.id.questionList);
@@ -98,9 +100,27 @@ public class QuestionsFragment extends NavDetailsFragment implements QuestionsVi
         mEmptyView = inflatedView.findViewById(R.id.emptyView);
         mQuestionView = inflatedView.findViewById(R.id.question_view);
 
-        onRefreshComplete(this.assessment.getQuestionList());
+        mSaveButton = (Button) inflatedView.findViewById(R.id.questions_done_button);
+        mSaveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onDoneButtonPressed();
+            }
+        });
+
+        onRefreshComplete(this.mAssessment.getQuestionList());
 
         return inflatedView;
+    }
+
+    private void onDoneButtonPressed() {
+        // save mAssessment details
+        // set is answered
+        Assessment assessmentToSave = new Assessment(mAssessment.getTitle(),
+                new ArrayList<Question>(mAssessment.getQuestionList()),
+                true, mAssessment.isExported(), mAssessment.getCustomer(), new Date());
+        assessmentToSave.save();
+        // callback to transit back to previous fragment
     }
 
     @Override

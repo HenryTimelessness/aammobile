@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -19,6 +20,7 @@ import com.henrychua.mydailyassessment.fragments.NavFragment;
 import com.henrychua.mydailyassessment.fragments.NavigationDrawerFragment;
 import com.henrychua.mydailyassessment.fragments.QuestionsFragment;
 import com.henrychua.mydailyassessment.fragments.ReportsFragment;
+import com.henrychua.mydailyassessment.helpers.AssessmentDBHelper;
 import com.henrychua.mydailyassessment.models.Assessment;
 import com.henrychua.mydailyassessment.models.Question;
 
@@ -53,6 +55,9 @@ public class BaseNavMenuActivity extends Activity  implements
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
+        //Setup DB
+        AssessmentDBHelper dbHelper = new AssessmentDBHelper(this.getApplicationContext());
+        SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
     }
 
     @Override
