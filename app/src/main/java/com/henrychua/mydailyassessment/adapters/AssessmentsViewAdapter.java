@@ -55,7 +55,7 @@ public class AssessmentsViewAdapter extends RecyclerView.Adapter<AssessmentsView
         PANASRow PANASRow = (PANASRow) assessmentViewHolder;
         //TODO: bind your model data to the views. make sure views are inited e.g.
         PANASRow.vTitle.setText(assessmentInCurrentPosition.getTitle());
-        PANASRow.vNumQuestions.setText(String.valueOf(assessmentInCurrentPosition.getQuestionList().size()));
+        PANASRow.vNumQuestions.setText(String.valueOf(assessmentInCurrentPosition.getQuestionsList().size()));
 
         //TODO: change null to the view that you need to work with
         mListener.onPanasViewInit(null);

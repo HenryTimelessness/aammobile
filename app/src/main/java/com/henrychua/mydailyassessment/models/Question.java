@@ -1,13 +1,11 @@
 package com.henrychua.mydailyassessment.models;
 
-import com.orm.SugarRecord;
-
 import java.util.List;
 
 /**
  * Created by henrychua on 21/01/2015.
  */
-public class Question extends SugarRecord<Question> {
+public class Question {
     public static final int ANSWER_OPEN_ENDED = 0;
     public static final int ANSWER_MULTIPLE_CHOICE = 1;
     public static final int ANSWER_YES_NO = 2;

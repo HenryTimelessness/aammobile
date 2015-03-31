@@ -4,12 +4,10 @@ import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.orm.SugarRecord;
-
 /**
  * Created by henrychua on 21/01/2015.
  */
-public class Customer extends SugarRecord<Customer> implements Parcelable {
+public class Customer implements Parcelable {
     private String name;
     private int phone;
     private String email;

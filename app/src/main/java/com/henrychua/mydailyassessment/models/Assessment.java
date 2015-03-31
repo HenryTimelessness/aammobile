@@ -3,42 +3,31 @@ package com.henrychua.mydailyassessment.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.orm.SugarRecord;
-
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 /**
  * Created by henrychua on 21/01/2015.
  */
-public class Assessment extends SugarRecord<Assessment> implements Parcelable {
+public class Assessment implements Parcelable {
     private String title;
     private boolean isAnswered;
     private boolean isExported;
     private Customer customer;
     private Date dateAnswered;
+    private List<Question> questionsList;
 
     public Assessment() {
         //required empty constructor
     }
 
-    public Assessment(String title, List<Question> questionList, boolean isAnswered, boolean isExported, Customer customer, Date dateAnswered) {
+    public Assessment(String title, List<Question> questionsList, boolean isAnswered, boolean isExported, Customer customer, Date dateAnswered) {
         this.title = title;
-        this.setQuestionList(questionList);
+        this.setQuestionsList(questionsList);
         this.isAnswered = isAnswered;
         this.isExported = isExported;
         this.customer = customer;
         this.dateAnswered = dateAnswered;
-    }
-
-    public void addQuestion(Question question) {
-        question.setAssessment(this);
-        question.save();
-    }
-
-    public void deleteQuestion(Question question) {
-        question.delete();
     }
 
     public String getTitle() {
@@ -47,18 +36,6 @@ public class Assessment extends SugarRecord<Assessment> implements Parcelable {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public List<Question> getQuestionList() {
-        return Question.find(Question.class, "assessment = ?", String.valueOf(this.getId()));
-
-    }
-
-    public void setQuestionList(List<Question> questionList) {
-        for (Question question : questionList) {
-            question.setAssessment(this);
-            question.save();
-        }
     }
 
     public boolean isAnswered() {
@@ -92,6 +69,15 @@ public class Assessment extends SugarRecord<Assessment> implements Parcelable {
     public void setDateAnswered(Date dateAnswered) {
         this.dateAnswered = dateAnswered;
     }
+
+    public List<Question> getQuestionsList() {
+        return questionsList;
+    }
+
+    public void setQuestionsList(List<Question> questionsList) {
+        this.questionsList = questionsList;
+    }
+
 
     @Override
     public int describeContents() {

@@ -1,7 +1,6 @@
 package com.henrychua.mydailyassessment.fragments;
 
 import android.app.Activity;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,21 +10,16 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
 
 import com.henrychua.mydailyassessment.R;
 import com.henrychua.mydailyassessment.adapters.AssessmentsViewAdapter;
-import com.henrychua.mydailyassessment.fragments.NavFragment;
 import com.henrychua.mydailyassessment.models.Assessment;
 import com.henrychua.mydailyassessment.models.Customer;
 import com.henrychua.mydailyassessment.models.Question;
-import com.orm.query.Condition;
-import com.orm.query.Select;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * A simple {\@link android.app.Fragment} subclass.
@@ -92,11 +86,6 @@ public class AssessmentsFragment extends NavFragment implements AssessmentsViewA
         Assessment assessment2 = new Assessment("PANASShort", questions, true, true, new Customer("Chua", 123456789, "string@string.com", null), new Date());
         listOfAssessment.add(assessment1);
         listOfAssessment.add(assessment2);
-        listOfAssessment.get(0).save();
-        List<Assessment> savedAssessments = Select.from(Assessment.class)
-//                .where(Condition.prop("is_answered").eq(true))
-                .list();
-        listOfAssessment.add(savedAssessments.get(0));
         onRefreshComplete(listOfAssessment);
 
         return inflatedView;

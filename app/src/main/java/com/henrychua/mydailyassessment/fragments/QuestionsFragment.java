@@ -108,18 +108,17 @@ public class QuestionsFragment extends NavDetailsFragment implements QuestionsVi
             }
         });
 
-        onRefreshComplete(this.mAssessment.getQuestionList());
+        onRefreshComplete(this.mAssessment.getQuestionsList());
 
         return inflatedView;
     }
 
     private void onDoneButtonPressed() {
-        // save mAssessment details
+        //TODO: save mAssessment details
         // set is answered
         Assessment assessmentToSave = new Assessment(mAssessment.getTitle(),
-                new ArrayList<Question>(mAssessment.getQuestionList()),
+                new ArrayList<Question>(mAssessment.getQuestionsList()),
                 true, mAssessment.isExported(), mAssessment.getCustomer(), new Date());
-        assessmentToSave.save();
         // callback to transit back to previous fragment
     }
 

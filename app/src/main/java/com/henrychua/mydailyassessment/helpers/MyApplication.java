@@ -3,8 +3,6 @@ package com.henrychua.mydailyassessment.helpers;
 import android.app.Application;
 import android.content.Context;
 
-import com.orm.SugarApp;
-
 import java.net.CookieHandler;
 import java.net.CookieManager;
 
@@ -17,7 +15,7 @@ import java.net.CookieManager;
  * call MyApplication.getAppContext() to get your application context statically.
  * Created by henrychua on 07/11/2014.
  */
-public class MyApplication extends SugarApp {
+public class MyApplication extends Application {
 
     private static Context context;
 
