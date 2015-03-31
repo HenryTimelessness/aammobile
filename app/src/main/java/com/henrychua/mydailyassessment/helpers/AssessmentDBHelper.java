@@ -9,29 +9,31 @@ import java.sql.SQLException;
 /**
  * Database Helper
  * If you make any changes to the DB, remember to increase the version number (DB_VERSION_NUMBER)
- * Please view the Schema at http://dbdesigner.net/designer/schema/59 click export > export as mysql and you can see the schema
+ * Please view the Schema at http://dbdesigner.net/designer/schema/59 click export > export as mysql and you can see the full schema with alter tables you need.
+ * However take note that the syntax is different for sqlite. click export > export as sqlite to see the actual syntax. At here you can't see the alter tables though.
  */
 public class AssessmentDBHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "assessments_db";
-    private static final int DB_VERSION_NUMBER = 1;
+    private static final int DB_VERSION_NUMBER = 4;
 
     //region SQL Statements to create Tables or Drop tables
 
     private static final String CREATE_QUESTIONS_TABLE = "CREATE TABLE questions (\n" +
-            " question_id INT NOT NULL AUTO_INCREMENT,\n" +
-            " question_type_id INT,\n" +
-            " assessment_id INT,\n" +
+            " question_id INTEGER,\n" +
+            " question_type_id INTEGER,\n" +
+            " assessment_id INTEGER,\n" +
             " content VARCHAR(255),\n" +
             " PRIMARY KEY (question_id)\n" +
             ");";
 
     private static final String CREATE_QUESTION_TYPES_TABLE = "CREATE TABLE question_types (\n" +
-            " question_type_id INT NOT NULL AUTO_INCREMENT,\n" +
+            " question_type_id INTEGER,\n" +
             " name VARCHAR(255),\n" +
             " PRIMARY KEY (question_type_id)\n" +
             ");";
 
-    private static final String DROP_TABLES = "DROP TABLE questions IF EXISTS";
+    private static final String DROP_TABLES_1 = "DROP TABLE IF EXISTS questions";
+    private static final String DROP_TABLES_2 = "DROP TABLE IF EXISTS question_types";
 
     //endregion
 
@@ -77,7 +79,8 @@ public class AssessmentDBHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         //drop table and call onCreate again
-        context.deleteDatabase(DB_NAME);
+        db.execSQL(DROP_TABLES_1);
+        db.execSQL(DROP_TABLES_2);
         onCreate(db);
     }
 
