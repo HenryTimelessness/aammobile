@@ -11,13 +11,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import com.henrychua.mydailyassessment.R;
+import com.henrychua.mydailyassessment.adapters.AssessmentDBAdapter;
 import com.henrychua.mydailyassessment.adapters.QuestionsViewAdapter;
+import com.henrychua.mydailyassessment.helpers.MyApplication;
 import com.henrychua.mydailyassessment.models.Assessment;
 import com.henrychua.mydailyassessment.models.Customer;
 import com.henrychua.mydailyassessment.models.Question;
@@ -119,6 +122,13 @@ public class QuestionsFragment extends NavDetailsFragment implements QuestionsVi
         Assessment assessmentToSave = new Assessment(mAssessment.getTitle(),
                 new ArrayList<Question>(mAssessment.getQuestionsList()),
                 true, mAssessment.isExported(), mAssessment.getCustomer(), new Date());
+        AssessmentDBAdapter assessmentDBAdapter = new AssessmentDBAdapter(MyApplication.getAppContext());
+        long id = assessmentDBAdapter.insertAssessment(assessmentToSave);
+        if (id < 0) {
+            Toast.makeText(MyApplication.getAppContext(), "lol", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this.getActivity(), "Saved", Toast.LENGTH_LONG).show();
+        }
         // callback to transit back to previous fragment
     }
 
