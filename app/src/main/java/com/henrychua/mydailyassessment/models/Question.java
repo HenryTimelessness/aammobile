@@ -6,53 +6,45 @@ import java.util.List;
  * Created by henrychua on 21/01/2015.
  */
 public class Question {
-    public static final int ANSWER_OPEN_ENDED = 0;
-    public static final int ANSWER_MULTIPLE_CHOICE = 1;
-    public static final int ANSWER_YES_NO = 2;
-    public static final int ANSWER_RATING = 3;
+    public static final String ANSWER_MULTIPLE_CHOICE = "MULTIPLE CHOICE";
+    public static final String ANSWER_OPEN_ENDED = "OPEN ENDED";
+    public static final String ANSWER_SCALE = "SCALE";
+    public static final String ANSWER_YES_NO = "DICHOTOMOUS";
 
     private String title;
     private String content;
-    private int answerType;
-    private double ratingRange;
+    private String answerType;
+    private double ratingLimitLower;
+    private double ratingLimitHigher;
     private double ratingAnswer;
     private String openEndedAnswer;
     private List<String> multipleChoiceAnswers;
     private int selectedMultipleAnswer; //1 or 2 for yes no
     private boolean isAnswered;
-    private Assessment assessment;
 
     public Question() {
         //required empty constructor
     }
 
-    public Question(String title, String content, int answerType, double ratingRange, double ratingAnswer, String openEndedAnswer, List<String> multipleChoiceAnswers, int selectedMultipleAnswer, boolean isAnswered, Assessment assessment) {
+    public Question(String title, String content, String answerType, double ratingLimitLower, double ratingLimitHigher, double ratingAnswer, String openEndedAnswer, List<String> multipleChoiceAnswers, int selectedMultipleAnswer, boolean isAnswered) {
         this.title = title;
         this.content = content;
         this.answerType = answerType;
-        this.ratingRange = ratingRange;
+        this.ratingLimitLower = ratingLimitLower;
+        this.ratingLimitHigher = ratingLimitHigher;
         this.ratingAnswer = ratingAnswer;
         this.openEndedAnswer = openEndedAnswer;
         this.multipleChoiceAnswers = multipleChoiceAnswers;
         this.selectedMultipleAnswer = selectedMultipleAnswer;
         this.isAnswered = isAnswered;
-        this.assessment = assessment;
-
     }
+
     public double getRatingAnswer() {
         return ratingAnswer;
     }
 
     public void setRatingAnswer(double ratingAnswer) {
         this.ratingAnswer = ratingAnswer;
-    }
-
-    public Assessment getAssessment() {
-        return assessment;
-    }
-
-    public void setAssessment(Assessment assessment) {
-        this.assessment = assessment;
     }
 
     public void answerMultipleChoice(int selectedAnswer) {
@@ -68,6 +60,22 @@ public class Question {
     public void answerRating(double ratingAnswer) {
         this.ratingAnswer = ratingAnswer;
         this.isAnswered = true;
+    }
+
+    public double getRatingLimitLower() {
+        return ratingLimitLower;
+    }
+
+    public void setRatingLimitLower(double ratingLimitLower) {
+        this.ratingLimitLower = ratingLimitLower;
+    }
+
+    public double getRatingLimitHigher() {
+        return ratingLimitHigher;
+    }
+
+    public void setRatingLimitHigher(double ratingLimitHigher) {
+        this.ratingLimitHigher = ratingLimitHigher;
     }
 
     public String getTitle() {
@@ -86,20 +94,12 @@ public class Question {
         this.content = content;
     }
 
-    public int getAnswerType() {
+    public String getAnswerType() {
         return answerType;
     }
 
-    public void setAnswerType(int answerType) {
+    public void setAnswerType(String answerType) {
         this.answerType = answerType;
-    }
-
-    public double getRatingRange() {
-        return ratingRange;
-    }
-
-    public void setRatingRange(double ratingRange) {
-        this.ratingRange = ratingRange;
     }
 
     public String getOpenEndedAnswer() {

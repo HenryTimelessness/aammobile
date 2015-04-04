@@ -11,6 +11,7 @@ import java.util.List;
  */
 public class Assessment implements Parcelable {
     private String title;
+    private String description;
     private boolean isAnswered;
     private boolean isExported;
     private Customer customer;
@@ -21,13 +22,22 @@ public class Assessment implements Parcelable {
         //required empty constructor
     }
 
-    public Assessment(String title, List<Question> questionsList, boolean isAnswered, boolean isExported, Customer customer, Date dateAnswered) {
+    public Assessment(String title, String description, boolean isAnswered, boolean isExported, Customer customer, Date dateAnswered, List<Question> questionsList) {
         this.title = title;
-        this.setQuestionsList(questionsList);
+        this.description = description;
         this.isAnswered = isAnswered;
         this.isExported = isExported;
         this.customer = customer;
         this.dateAnswered = dateAnswered;
+        this.questionsList = questionsList;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getTitle() {

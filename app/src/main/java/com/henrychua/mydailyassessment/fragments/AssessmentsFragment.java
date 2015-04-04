@@ -12,7 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.henrychua.mydailyassessment.R;
+import com.henrychua.mydailyassessment.adapters.AssessmentDBAdapter;
 import com.henrychua.mydailyassessment.adapters.AssessmentsViewAdapter;
+import com.henrychua.mydailyassessment.helpers.MyApplication;
 import com.henrychua.mydailyassessment.models.Assessment;
 import com.henrychua.mydailyassessment.models.Customer;
 import com.henrychua.mydailyassessment.models.Question;
@@ -76,16 +78,10 @@ public class AssessmentsFragment extends NavFragment implements AssessmentsViewA
         mEmptyView = inflatedView.findViewById(R.id.emptyView);
         mAssessmentView = inflatedView.findViewById(R.id.assessment_view);
 
-        //create test data
-        listOfAssessment = new ArrayList<Assessment>();
-        List<Question> questions = new ArrayList<Question>();
+        AssessmentDBAdapter assessmentDBAdapter = new AssessmentDBAdapter(MyApplication.getAppContext());
 
-        questions.add(new Question("Titlez", "Some qns", Question.ANSWER_RATING, 10.0, 5.0, null, null, 0, false, null));
-        questions.add(new Question("Titlez2", "Some qns2", Question.ANSWER_RATING, 10.0, 5.0, null, null, 0, false, null));
-        Assessment assessment1 = new Assessment("PANAS", questions, true, true, new Customer("Chua", 123456789, "string@string.com", null), new Date());
-        Assessment assessment2 = new Assessment("PANASShort", questions, true, true, new Customer("Chua", 123456789, "string@string.com", null), new Date());
-        listOfAssessment.add(assessment1);
-        listOfAssessment.add(assessment2);
+        listOfAssessment = assessmentDBAdapter.getAllAvailableAssessments();
+
         onRefreshComplete(listOfAssessment);
 
         return inflatedView;

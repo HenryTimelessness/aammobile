@@ -22,7 +22,6 @@ import com.henrychua.mydailyassessment.adapters.AssessmentDBAdapter;
 import com.henrychua.mydailyassessment.adapters.QuestionsViewAdapter;
 import com.henrychua.mydailyassessment.helpers.MyApplication;
 import com.henrychua.mydailyassessment.models.Assessment;
-import com.henrychua.mydailyassessment.models.Customer;
 import com.henrychua.mydailyassessment.models.Question;
 
 /**
@@ -119,12 +118,12 @@ public class QuestionsFragment extends NavDetailsFragment implements QuestionsVi
     private void onDoneButtonPressed() {
         //TODO: save mAssessment details
         // set is answered
-        Assessment assessmentToSave = new Assessment(mAssessment.getTitle(),
-                new ArrayList<Question>(mAssessment.getQuestionsList()),
-                true, mAssessment.isExported(), mAssessment.getCustomer(), new Date());
+        Assessment assessmentToSave = new Assessment(mAssessment.getTitle(), mAssessment.getDescription(),
+                true, mAssessment.isExported(), mAssessment.getCustomer(), new Date(),
+                new ArrayList<Question>(mAssessment.getQuestionsList()));
         AssessmentDBAdapter assessmentDBAdapter = new AssessmentDBAdapter(MyApplication.getAppContext());
-        long id = assessmentDBAdapter.insertAssessment(assessmentToSave);
-        if (id < 0) {
+        boolean isSaved = assessmentDBAdapter.saveDoneAssessment(assessmentToSave);
+        if (!isSaved) {
             Toast.makeText(MyApplication.getAppContext(), "lol", Toast.LENGTH_LONG).show();
         } else {
             Toast.makeText(this.getActivity(), "Saved", Toast.LENGTH_LONG).show();

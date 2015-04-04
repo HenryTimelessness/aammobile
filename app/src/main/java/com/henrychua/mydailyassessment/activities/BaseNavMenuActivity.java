@@ -12,14 +12,21 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.henrychua.mydailyassessment.R;
+import com.henrychua.mydailyassessment.adapters.AssessmentDBAdapter;
 import com.henrychua.mydailyassessment.fragments.AssessmentsFragment;
 import com.henrychua.mydailyassessment.fragments.NavDetailsFragment;
 import com.henrychua.mydailyassessment.fragments.NavFragment;
 import com.henrychua.mydailyassessment.fragments.NavigationDrawerFragment;
 import com.henrychua.mydailyassessment.fragments.QuestionsFragment;
 import com.henrychua.mydailyassessment.fragments.ReportsFragment;
+import com.henrychua.mydailyassessment.helpers.MyApplication;
 import com.henrychua.mydailyassessment.models.Assessment;
+import com.henrychua.mydailyassessment.models.Customer;
 import com.henrychua.mydailyassessment.models.Question;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 
 public class BaseNavMenuActivity extends Activity  implements
