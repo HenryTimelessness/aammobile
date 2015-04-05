@@ -78,8 +78,8 @@ public class AssessmentsFragment extends NavFragment implements AssessmentsViewA
         mEmptyView = inflatedView.findViewById(R.id.emptyView);
         mAssessmentView = inflatedView.findViewById(R.id.assessment_view);
 
+        // get from db the assessments
         AssessmentDBAdapter assessmentDBAdapter = new AssessmentDBAdapter(MyApplication.getAppContext());
-
         listOfAssessment = assessmentDBAdapter.getAllAvailableAssessments();
 
         onRefreshComplete(listOfAssessment);

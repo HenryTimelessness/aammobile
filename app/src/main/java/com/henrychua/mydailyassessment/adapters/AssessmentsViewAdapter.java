@@ -51,7 +51,7 @@ public class AssessmentsViewAdapter extends RecyclerView.Adapter<AssessmentsView
     
     @Override
     public void onBindViewHolder(AssessmentViewHolder assessmentViewHolder, final int position) {
-        Assessment assessmentInCurrentPosition = assessments.get(position);
+        final Assessment assessmentInCurrentPosition = assessments.get(position);
         PANASRow PANASRow = (PANASRow) assessmentViewHolder;
         //TODO: bind your model data to the views. make sure views are inited e.g.
         PANASRow.vTitle.setText(assessmentInCurrentPosition.getTitle());
@@ -61,7 +61,7 @@ public class AssessmentsViewAdapter extends RecyclerView.Adapter<AssessmentsView
         mListener.onPanasViewInit(null);
         assessmentViewHolder.setOnClickListener(new AssessmentsViewAdapter.AssessmentViewHolder.IMyViewHolderClicks() {
             public void onClickAssessmentRow(View caller) {
-                mListener.onPanasViewClick(assessments.get(position));
+                mListener.onPanasViewClick(assessmentInCurrentPosition);
             }
         });
     }

@@ -120,11 +120,11 @@ public class QuestionsFragment extends NavDetailsFragment implements QuestionsVi
         // set is answered
         Assessment assessmentToSave = new Assessment(mAssessment.getTitle(), mAssessment.getDescription(),
                 true, mAssessment.isExported(), mAssessment.getCustomer(), new Date(),
-                new ArrayList<Question>(mAssessment.getQuestionsList()));
+                new ArrayList<Question>(mAssessment.getQuestionsList()), mAssessment.getAssessmentId());
         AssessmentDBAdapter assessmentDBAdapter = new AssessmentDBAdapter(MyApplication.getAppContext());
         boolean isSaved = assessmentDBAdapter.saveDoneAssessment(assessmentToSave);
         if (!isSaved) {
-            Toast.makeText(MyApplication.getAppContext(), "lol", Toast.LENGTH_LONG).show();
+            Toast.makeText(MyApplication.getAppContext(), "Cannot save", Toast.LENGTH_LONG).show();
         } else {
             Toast.makeText(this.getActivity(), "Saved", Toast.LENGTH_LONG).show();
         }
@@ -189,6 +189,28 @@ public class QuestionsFragment extends NavDetailsFragment implements QuestionsVi
     public void onQuestionViewClick(Question question) {
         if (mListener != null) {
             mListener.onQuestionClick(question);
+        }
+    }
+
+    @Override
+    public void onQuestionAnswerUpdated(Question question, String answerOpenEnded) {
+        for(Question qns : this.mAssessment.getQuestionsList()) {
+            if (qns.getQuestionId() == question.getQuestionId()) {
+                qns.setOpenEndedAnswer(answerOpenEnded);
+                qns.setAnswered(true);
+                break;
+            }
+        }
+    }
+
+    @Override
+    public void onQuestionAnswerUpdated(Question question, double answerScale) {
+        for(Question qns : this.mAssessment.getQuestionsList()) {
+            if (qns.getQuestionId() == question.getQuestionId()) {
+                qns.setRatingAnswer(answerScale);
+                qns.setAnswered(true);
+                break;
+            }
         }
     }
 

@@ -17,6 +17,7 @@ public class Assessment implements Parcelable {
     private Customer customer;
     private Date dateAnswered;
     private List<Question> questionsList;
+    private int assessmentId = -1;
 
     public Assessment() {
         //required empty constructor
@@ -30,6 +31,17 @@ public class Assessment implements Parcelable {
         this.customer = customer;
         this.dateAnswered = dateAnswered;
         this.questionsList = questionsList;
+    }
+
+    public Assessment(String title, String description, boolean isAnswered, boolean isExported, Customer customer, Date dateAnswered, List<Question> questionsList, int assessmentId) {
+        this.title = title;
+        this.description = description;
+        this.isAnswered = isAnswered;
+        this.isExported = isExported;
+        this.customer = customer;
+        this.dateAnswered = dateAnswered;
+        this.questionsList = questionsList;
+        this.assessmentId = assessmentId;
     }
 
     public String getDescription() {
@@ -88,6 +100,13 @@ public class Assessment implements Parcelable {
         this.questionsList = questionsList;
     }
 
+    public int getAssessmentId() {
+        return assessmentId;
+    }
+
+    public void setAssessmentId(int assessmentId) {
+        this.assessmentId = assessmentId;
+    }
 
     @Override
     public int describeContents() {

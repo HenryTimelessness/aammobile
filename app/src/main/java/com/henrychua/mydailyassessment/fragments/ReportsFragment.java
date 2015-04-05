@@ -12,7 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.henrychua.mydailyassessment.R;
+import com.henrychua.mydailyassessment.adapters.AssessmentDBAdapter;
 import com.henrychua.mydailyassessment.adapters.ReportsViewAdapter;
+import com.henrychua.mydailyassessment.helpers.MyApplication;
 import com.henrychua.mydailyassessment.models.Assessment;
 
 import java.util.List;
@@ -72,6 +74,12 @@ public class ReportsFragment extends NavFragment implements ReportsViewAdapter.O
         mEmptyView = inflatedView.findViewById(R.id.emptyView);
         mAssessmentView = inflatedView.findViewById(R.id.assessment_view);
 
+        // get from db the assessments
+        AssessmentDBAdapter assessmentDBAdapter = new AssessmentDBAdapter(MyApplication.getAppContext());
+        listOfAssessment = assessmentDBAdapter.getAllDoneAssessments();
+
+        onRefreshComplete(listOfAssessment);
+
         return inflatedView;
     }
 
@@ -118,7 +126,7 @@ public class ReportsFragment extends NavFragment implements ReportsViewAdapter.O
 
     @Override
     public String getFragmentTitle() {
-        return "Assessment";
+        return "Reports";
     }
 
 

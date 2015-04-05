@@ -22,6 +22,8 @@ public class Question {
     private int selectedMultipleAnswer; //1 or 2 for yes no
     private boolean isAnswered;
 
+    private int questionId = -1; // if >1 it exists in database else it doesn't
+
     public Question() {
         //required empty constructor
     }
@@ -37,6 +39,20 @@ public class Question {
         this.multipleChoiceAnswers = multipleChoiceAnswers;
         this.selectedMultipleAnswer = selectedMultipleAnswer;
         this.isAnswered = isAnswered;
+    }
+
+    public Question(String title, String content, String answerType, double ratingLimitLower, double ratingLimitHigher, double ratingAnswer, String openEndedAnswer, List<String> multipleChoiceAnswers, int selectedMultipleAnswer, boolean isAnswered, int questionId) {
+        this.title = title;
+        this.content = content;
+        this.answerType = answerType;
+        this.ratingLimitLower = ratingLimitLower;
+        this.ratingLimitHigher = ratingLimitHigher;
+        this.ratingAnswer = ratingAnswer;
+        this.openEndedAnswer = openEndedAnswer;
+        this.multipleChoiceAnswers = multipleChoiceAnswers;
+        this.selectedMultipleAnswer = selectedMultipleAnswer;
+        this.isAnswered = isAnswered;
+        this.questionId = questionId;
     }
 
     public double getRatingAnswer() {
@@ -132,5 +148,14 @@ public class Question {
 
     public void setAnswered(boolean isAnswered) {
         this.isAnswered = isAnswered;
+    }
+
+
+    public int getQuestionId() {
+        return questionId;
+    }
+
+    public void setQuestionId(int questionId) {
+        this.questionId = questionId;
     }
 }

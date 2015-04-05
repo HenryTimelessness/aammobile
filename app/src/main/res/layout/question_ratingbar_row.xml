@@ -83,7 +83,7 @@
                     <TableRow>
 
                         <TextView
-                            android:id="@+id/parcel_location_title"
+                            android:id="@+id/reports_date_answered_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Number of Questions:"

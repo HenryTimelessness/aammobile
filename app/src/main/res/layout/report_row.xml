@@ -18,37 +18,6 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="6dp">
-
-                <ImageView
-                    android:id="@+id/icon_parcel_time_left"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_margin="6dp"
-                    android:scaleType="fitCenter"
-                    android:adjustViewBounds="true"
-                    android:src="@drawable/banner_steps" />
-
-                <TextView
-                    android:id="@+id/assessments_assessment_title"
-                    android:paddingLeft="6dp"
-                    android:fontFamily=""
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toEndOf="@+id/icon_parcel_time_left"
-                    android:layout_toRightOf="@+id/icon_parcel_time_left"
-                    android:text="PANAS"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="@android:color/holo_blue_dark" />
-            </RelativeLayout>
-
             <View style="@style/GrayDivider" />
 
             <RelativeLayout
@@ -56,17 +25,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="6dp">
 
-                <ImageView
-                    android:id="@+id/image_parcel_coy_logo"
-                    android:scaleType="fitCenter"
-                    android:adjustViewBounds="true"
-                    android:layout_width="70dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:padding="2dp"
-                    android:src="@drawable/placeholder" />
+
 
                 <TableLayout
                     android:layout_width="wrap_content"
@@ -76,9 +35,27 @@
                     android:padding="6dp"
                     android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_toRightOf="@+id/image_parcel_coy_logo"
-                    android:layout_toEndOf="@+id/image_parcel_coy_logo">
+                    android:layout_alignParentEnd="true">
+
+                    <TableRow>
+
+                        <TextView
+                            android:id="@+id/reports_assessment_name_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Assessment:"
+                            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                        <TextView
+                            android:id="@+id/reports_assessment_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="end"
+                            android:textAlignment="gravity"
+                            android:text="Unable to get Number"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textStyle="bold" />
+                    </TableRow>
 
                     <TableRow>
 
@@ -86,11 +63,11 @@
                             android:id="@+id/reports_date_answered_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Number of Questions:"
+                            android:text="Date answered:"
                             android:textAppearance="?android:attr/textAppearanceSmall" />
 
                         <TextView
-                            android:id="@+id/assessments_number_of_questions"
+                            android:id="@+id/reports_date_answered"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="end"

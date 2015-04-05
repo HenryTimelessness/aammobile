@@ -28,13 +28,45 @@ public class AssessmentDBAdapter {
         this.assessmentDBHelper = new AssessmentDBHelper(context);
     }
 
-    //TODO: change return to return something sensisble
+    /**
+     * Saves an assessment that is done to the database
+     * @param assessment
+     * @return
+     */
     public boolean saveDoneAssessment(Assessment assessment) {
         boolean isTransactionSuccessful = true;
         SQLiteDatabase sqLiteDatabase = assessmentDBHelper.getWritableDatabase();
+        sqLiteDatabase.beginTransaction();
+        // add to done_assessments table
         ContentValues contentValues = new ContentValues();
-        contentValues.put("content", "SomeValue");
-        long id = sqLiteDatabase.insert("questions", null, contentValues);
+        contentValues.put("assessment_id", assessment.getAssessmentId());
+        contentValues.put("date", assessment.getDateAnswered().getTime());
+        long doneAssessmentId = sqLiteDatabase.insert("done_assessments", null, contentValues);
+        long questionAnswersId = -1;
+        isTransactionSuccessful = (doneAssessmentId > 0);
+        // loop to add answers of questions
+        List<Question> questionList = assessment.getQuestionsList();
+        for (Question question : questionList) {
+            if (isTransactionSuccessful) {
+
+                // add the answers to question_answers table
+                contentValues = new ContentValues();
+                contentValues.put("question_id", question.getQuestionId());
+                contentValues.put("scale_answer", question.getRatingAnswer());
+                contentValues.put("multiple_choice_answer_id", -1);
+                contentValues.put("open_ended_answer", question.getOpenEndedAnswer());
+                questionAnswersId = sqLiteDatabase.insert("question_answers", null, contentValues);
+
+                isTransactionSuccessful = (questionAnswersId > 0);
+            } else {
+                break;
+            }
+        }
+        if (isTransactionSuccessful) {
+            sqLiteDatabase.setTransactionSuccessful();
+        }
+        sqLiteDatabase.endTransaction();
+
         return isTransactionSuccessful;
     }
 
@@ -102,10 +134,6 @@ public class AssessmentDBAdapter {
      * @return
      */
     public List<Assessment> getAllAvailableAssessments() {
-        // get all Assessments and its id
-        // for each Assessment, find its list of questions
-        // get all questions and the detail in the assessment from tables questions, question_types, scale_ranges, multiple choice
-        // get a
         // Uses SQLiteQueryBuilder to query multiple tables
         SQLiteDatabase sqLiteDatabase = assessmentDBHelper.getWritableDatabase();
         List<Assessment> assessmentList = new ArrayList<Assessment>();
@@ -123,7 +151,7 @@ public class AssessmentDBAdapter {
             String assessmentTitle = cursor.getString(assessmentTitleIndex);
             String assessmentDescription = cursor.getString(assessmentDescriptionIndex);
             List<Question> questionList = getQuestionsInAssessment(assessmentId);
-            assessmentList.add(new Assessment(assessmentTitle, assessmentDescription, false, false, null, null, questionList));
+            assessmentList.add(new Assessment(assessmentTitle, assessmentDescription, false, false, null, null, questionList, assessmentId));
         }
         cursor.close();
         return assessmentList;
@@ -145,19 +173,64 @@ public class AssessmentDBAdapter {
                         + " LEFT JOIN "
                         + "scale_ranges ON scale_ranges.question_id = questions.question_id");
 
-        String[] columns = {"questions.content", "question_types.name", "scale_ranges.lower_limit", "scale_ranges.upper_limit"};
+        String[] columns = {"questions.question_id", "questions.content", "question_types.name", "scale_ranges.lower_limit", "scale_ranges.upper_limit"};
         // Get cursor
         Cursor cursor = queryBuilder.query(sqLiteDatabase, columns, "questions.assessment_id = " + String.valueOf(assessmentId), null, null, null, null);
         while (cursor.moveToNext()) {
+            int questionIdIndex = cursor.getColumnIndex("question_id");
             int questionContentIndex = cursor.getColumnIndex("content");
             int questionTypeIndex = cursor.getColumnIndex("name");
             int questionScaleLowerLimitIndex = cursor.getColumnIndex("lower_limit");
             int questionScaleUpperLimitIndex = cursor.getColumnIndex("upper_limit");
+            int questionId = cursor.getInt(questionIdIndex);
             String questionContent = cursor.getString(questionContentIndex);
             String questionType = cursor.getString(questionTypeIndex);
             double questionScaleLowerLimit = cursor.getDouble(questionScaleLowerLimitIndex);
             double questionScaleUpperLimit = cursor.getDouble(questionScaleUpperLimitIndex);
-            questionList.add(new Question("A question", questionContent, questionType, questionScaleLowerLimit, questionScaleUpperLimit, 0, "", null, 0, false));
+            questionList.add(new Question("A question", questionContent, questionType, questionScaleLowerLimit, questionScaleUpperLimit, 0, "", null, 0, false, questionId));
+        }
+        cursor.close();
+        return questionList;
+    }
+
+    /**
+     * Gets a list of questions of the assessment with its answers if they exist
+     * @param assessmentId
+     * @return
+     */
+    public List<Question> getQuestionsAndAnswersInAssessment(int assessmentId) {
+        SQLiteDatabase sqLiteDatabase = assessmentDBHelper.getWritableDatabase();
+        List<Question> questionList = new ArrayList<Question>();
+        SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
+        queryBuilder
+                .setTables("questions"
+                        + " LEFT JOIN "
+                        + "question_types ON question_types.question_type_id = questions.question_type_id"
+                        + " LEFT JOIN "
+                        + "scale_ranges ON scale_ranges.question_id = questions.question_id"
+                        + " LEFT JOIN "
+                        + "question_answers ON question_answers.question_id = questions.question_id");
+
+        String[] columns = {"questions.question_id", "questions.content", "question_types.name", "scale_ranges.lower_limit", "scale_ranges.upper_limit",
+                "question_answers.scale_answer", "question_answers.open_ended_answer"};
+        // Get cursor
+        Cursor cursor = queryBuilder.query(sqLiteDatabase, columns, "questions.assessment_id = " + String.valueOf(assessmentId), null, null, null, null);
+        while (cursor.moveToNext()) {
+            int questionIdIndex = cursor.getColumnIndex("question_id");
+            int questionContentIndex = cursor.getColumnIndex("content");
+            int questionTypeIndex = cursor.getColumnIndex("name");
+            int questionScaleLowerLimitIndex = cursor.getColumnIndex("lower_limit");
+            int questionScaleUpperLimitIndex = cursor.getColumnIndex("upper_limit");
+            int answerScaleIndex = cursor.getColumnIndex("scale_answer");
+            int answerOpenEndedIndex = cursor.getColumnIndex("open_ended_answer");
+            int questionId = cursor.getInt(questionIdIndex);
+            String questionContent = cursor.getString(questionContentIndex);
+            String questionType = cursor.getString(questionTypeIndex);
+            double questionScaleLowerLimit = cursor.getDouble(questionScaleLowerLimitIndex);
+            double questionScaleUpperLimit = cursor.getDouble(questionScaleUpperLimitIndex);
+            double scaleAnswer = cursor.getDouble(answerScaleIndex);
+            String openEndedAnswer = cursor.getString(answerOpenEndedIndex);
+            questionList.add(new Question("A question", questionContent, questionType, questionScaleLowerLimit, questionScaleUpperLimit, scaleAnswer, openEndedAnswer, null, 0, true, questionId));
         }
         cursor.close();
         return questionList;
@@ -166,8 +239,34 @@ public class AssessmentDBAdapter {
     /**
      * Gets all Done Assessments from the database
      */
-    public void getAllDoneAssessments() {
+    public List<Assessment> getAllDoneAssessments() {
+        // Uses SQLiteQueryBuilder to query multiple tables
+        SQLiteDatabase sqLiteDatabase = assessmentDBHelper.getWritableDatabase();
+        List<Assessment> assessmentList = new ArrayList<Assessment>();
+        SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
+        queryBuilder
+                .setTables("done_assessments"
+                        + " INNER JOIN "
+                        + "assessments ON done_assessments.assessment_id = assessments.assessment_id");
 
+
+        String[] columns = {"done_assessments.assessment_id", "done_assessments.date", "assessments.title", "assessments.description"};
+        // Get cursor
+        Cursor cursor = queryBuilder.query(sqLiteDatabase, columns, null, null, null, null, null);
+        while (cursor.moveToNext()) {
+            int assessmentIdIndex = cursor.getColumnIndex("assessment_id");
+            int assessmentDoneDateIndex = cursor.getColumnIndex("date");
+            int assessmentTitleIndex = cursor.getColumnIndex("title");
+            int assessmentDescriptionIndex = cursor.getColumnIndex("description");
+            int assessmentId = cursor.getInt(assessmentIdIndex);
+            Date assessmentDoneDate = new Date(cursor.getLong(assessmentDoneDateIndex));
+            String assessmentTitle = cursor.getString(assessmentTitleIndex);
+            String assessmentDescription = cursor.getString(assessmentDescriptionIndex);
+            List<Question> questionList = getQuestionsAndAnswersInAssessment(assessmentId);
+            assessmentList.add(new Assessment(assessmentTitle, assessmentDescription, false, false, null, assessmentDoneDate, questionList, assessmentId));
+        }
+        cursor.close();
+        return assessmentList;
     }
 
     public void getAllDoneAndExportedAssessments() {
@@ -176,7 +275,7 @@ public class AssessmentDBAdapter {
 
     static class AssessmentDBHelper extends SQLiteOpenHelper {
         private static final String DB_NAME = "assessments_db";
-        private static final int DB_VERSION_NUMBER = 19;
+        private static final int DB_VERSION_NUMBER = 20;
 
         //region SQL Statements to initialize tables or Drop tables
 
@@ -406,7 +505,7 @@ public class AssessmentDBAdapter {
             listOfAssessment.add(assessment1);
             listOfAssessment.add(assessment2);
             for (Assessment assessment : listOfAssessment) {
-                this.createNewAssessment(assessment,db);
+                this.createNewAssessment(assessment, db);
             }
         }
 
