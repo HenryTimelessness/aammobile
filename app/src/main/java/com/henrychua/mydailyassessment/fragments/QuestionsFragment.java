@@ -49,6 +49,8 @@ public class QuestionsFragment extends NavDetailsFragment implements QuestionsVi
 
     private Assessment mAssessment;
 
+    Toast mToast = Toast.makeText(MyApplication.getAppContext(), "", Toast.LENGTH_SHORT);
+
     /**
      * View reference to Question's recyclerView
      */
@@ -205,6 +207,9 @@ public class QuestionsFragment extends NavDetailsFragment implements QuestionsVi
 
     @Override
     public void onQuestionAnswerUpdated(Question question, double answerScale) {
+        mToast.setText(String.valueOf(answerScale)+"/"+question.getRatingLimitHigher());
+        mToast.show();
+
         for(Question qns : this.mAssessment.getQuestionsList()) {
             if (qns.getQuestionId() == question.getQuestionId()) {
                 qns.setRatingAnswer(answerScale);

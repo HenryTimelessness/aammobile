@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.henrychua.mydailyassessment.R;
 import com.henrychua.mydailyassessment.models.Question;
 
