@@ -1,0 +1,3 @@
+sourceRoot: app_fmpp
+outputRoot: testout
+data: tdd(data/fmpp_config.tdd)

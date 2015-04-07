@@ -1,0 +1,66 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:foreground="@drawable/selector_pressed_others">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/app_white"
+        android:orientation="vertical">
+
+        <View style="@style/GrayDividerBig" />
+
+        <LinearLayout
+            android:id="@+id/parcel_card_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="6dp">
+
+                <ImageView
+                    android:id="@+id/icon_parcel_time_left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_margin="6dp"
+                    android:scaleType="fitCenter"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/banner_steps" />
+
+                <TextView
+                    android:id="@+id/questions_question_content"
+                    android:paddingLeft="6dp"
+                    android:fontFamily=""
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@+id/icon_parcel_time_left"
+                    android:layout_toRightOf="@+id/icon_parcel_time_left"
+                    android:text="Question?"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@android:color/holo_blue_dark" />
+            </RelativeLayout>
+
+            <View style="@style/GrayDivider" />
+
+            <SeekBar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/questions_answer_seekbar"
+                android:layout_gravity="center_horizontal" />
+
+        </LinearLayout>
+
+        <View style="@style/GrayDividerDark" />
+
+        <View style="@style/GrayDividerBig" />
+    </LinearLayout>
+</FrameLayout>

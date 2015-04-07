@@ -1,0 +1,85 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="android:Theme.Holo.Light">
+        <!--parent="android:Theme.Holo.Light"-->
+        <!-- Customize your theme here. -->
+        <item name="android:actionBarStyle">@style/AppTheme.ActionBar</item>
+        <item name="android:colorPressedHighlight">@color/app_green</item>
+        <item name="android:colorLongPressedHighlight">@color/app_green</item>
+        <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
+        <item name="android:actionMenuTextColor">@color/app_white</item>
+    </style>
+
+    <style name="AppTheme.ActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
+        <item name="android:background">@color/app_green</item>
+        <item name="android:titleTextStyle">@style/AppTheme.ActionBar.TitleTextStyle</item>
+        <item name="android:icon">@android:color/transparent</item>
+    </style>
+
+    <style name="AppTheme.ActionBar.TitleTextStyle" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/app_white</item>
+    </style>
+
+    <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="spinBars">true</item>
+        <item name="color">@color/app_white</item>
+    </style>
+
+    <!-- White Line Divider -->
+    <style name="WhiteDivider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0.5dp</item>
+        <item name="android:background">@android:color/white</item>
+    </style>
+
+    <!-- Gray Line Divider -->
+    <style name="GrayDivider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0.5dp</item>
+        <item name="android:background">@color/app_grey</item>
+    </style>
+
+    <!-- Gray Line Divider Dark -->
+    <style name="GrayDividerDark">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0.5dp</item>
+        <item name="android:background">@color/app_grey_darker</item>
+    </style>
+
+    <!-- Gray Line Divider Dark -->
+    <style name="GrayDividerDarker">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0.5dp</item>
+        <item name="android:background">@color/app_grey_darker2</item>
+    </style>
+
+    <!-- Gray Line Divider Big -->
+    <style name="GrayDividerBig">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">3.5dp</item>
+        <item name="android:background">@color/app_grey</item>
+    </style>
+
+    <style name="FormRow">
+        <item name="android:weightSum">10</item>
+        <item name="android:paddingTop">6dp</item>
+        <item name="android:paddingBottom">6dp</item>
+    </style>
+
+    <style name="FormIcon">
+        <!--<item name="android:layout_marginLeft">10dp</item>-->
+        <!--<item name="android:layout_marginTop">10dp</item>-->
+        <item name="android:layout_weight">9</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:layout_marginStart" tools:ignore="NewApi">10dp</item>
+    </style>
+
+    <style name="FormInputBox">
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:layout_marginStart" tools:ignore="NewApi">10dp</item>
+        <item name="android:textColorHint">@color/app_white</item>
+        <item name="android:textColor">@color/app_white</item>
+    </style>
+
+</resources>
