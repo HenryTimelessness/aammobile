@@ -105,8 +105,8 @@ public class NavigationDrawerFragment extends Fragment {
                              Bundle savedInstanceState) {
         final DrawerItem[] drawerItem = new DrawerItem[NUM_OF_SECTIONS];
         //TODO: CHANGE ICONS FOR SELECTED AND NON SELECTED
-        drawerItem[POSITION_ASSESSMENTSFRAGMENT] = new DrawerItem(R.drawable.banner_steps, R.drawable.banner_steps, "Assessments", true);
-        drawerItem[POSITION_REPORTSFRAGMENT] = new DrawerItem(R.drawable.banner_steps, R.drawable.banner_steps, "Reports", false);
+        drawerItem[POSITION_ASSESSMENTSFRAGMENT] = new DrawerItem(R.drawable.report_icon, R.drawable.report_icon, "Assessments", true);
+        drawerItem[POSITION_REPORTSFRAGMENT] = new DrawerItem(R.drawable.report_icon, R.drawable.report_icon, "Reports", false);
 
         LinearLayout drawerView = (LinearLayout) inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
         mDrawerListView = (ListView) drawerView.findViewById(R.id.drawer_list_view);

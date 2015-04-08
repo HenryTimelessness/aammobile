@@ -4,3 +4,5 @@ numOfDifferentRowsInRecyclerView: 1
 differentRowsInViewAdapter: [
     {name: "Report", viewName: "report_row", position: 0, viewType:0, clickable: true }
 ]
+theme: red
+databaseVersion: 30

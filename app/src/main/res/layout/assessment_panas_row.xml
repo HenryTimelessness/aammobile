@@ -33,7 +33,7 @@
                     android:layout_margin="6dp"
                     android:scaleType="fitCenter"
                     android:adjustViewBounds="true"
-                    android:src="@drawable/banner_steps" />
+                    android:src="@drawable/assessment_icon" />
 
                 <TextView
                     android:id="@+id/assessments_assessment_title"
@@ -46,7 +46,7 @@
                     android:layout_toRightOf="@+id/icon_parcel_time_left"
                     android:text="PANAS"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="@android:color/holo_blue_dark" />
+                    android:textColor="@color/color_scheme_1_4" />
             </RelativeLayout>
 
             <View style="@style/GrayDivider" />
