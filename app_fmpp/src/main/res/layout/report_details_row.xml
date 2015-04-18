@@ -1,0 +1,54 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <!--android:foreground="@drawable/selector_pressed_others">-->
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/app_white"
+        android:orientation="vertical">
+
+        <View style="@style/GrayDividerBig" />
+
+        <LinearLayout
+            android:id="@+id/report_card_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/report_question_content"
+                android:paddingLeft="12dp"
+                android:fontFamily=""
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="Question?"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@android:color/black" />
+
+            <View style="@style/GrayDivider" />
+
+            <TextView
+                android:id="@+id/report_question_answer"
+                android:paddingLeft="12dp"
+                android:fontFamily=""
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/icon_parcel_time_left"
+                android:layout_toRightOf="@+id/icon_parcel_time_left"
+                android:text="Answer?"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@android:color/holo_blue_dark" />
+
+        </LinearLayout>
+
+        <View style="@style/GrayDividerDark" />
+
+        <View style="@style/GrayDividerBig" />
+    </LinearLayout>
+</FrameLayout>
