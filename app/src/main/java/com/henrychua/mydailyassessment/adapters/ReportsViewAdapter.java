@@ -63,7 +63,7 @@ public class ReportsViewAdapter extends RecyclerView.Adapter<ReportsViewAdapter.
 
         //TODO: change null to the view that you need to work with
         mListener.onReportViewInit(null);
-        assessmentViewHolder.setOnClickListener(new ReportsViewAdapter.AssessmentViewHolder.IMyViewHolderClicks() {
+        assessmentViewHolder.setOnClickListener(new AssessmentViewHolder.IMyViewHolderClicks() {
             public void onClickAssessmentRow(View caller) {
                 mListener.onReportViewClick(assessmentInCurrentPosition);
             }
@@ -76,7 +76,7 @@ public class ReportsViewAdapter extends RecyclerView.Adapter<ReportsViewAdapter.
             //TODO: see if you want to change the name of the layout
             View itemView = LayoutInflater.from(viewGroup.getContext()).
                     inflate(R.layout.report_row, viewGroup, false);
-            return new ReportRow(itemView, new ReportsViewAdapter.AssessmentViewHolder.IMyViewHolderClicks() {
+            return new ReportRow(itemView, new AssessmentViewHolder.IMyViewHolderClicks() {
                 public void onClickAssessmentRow(View caller) {
                     //TODO: do something
                 }

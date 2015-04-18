@@ -74,7 +74,7 @@ public class ReportDetailsViewAdapter extends RecyclerView.Adapter<ReportDetails
 
             //TODO: change null to the view that you need to work with
             mListener.onQuestionViewInit(null);
-            questionViewHolder.setOnClickListener(new ReportDetailsViewAdapter.QuestionViewHolder.IMyViewHolderClicks() {
+            questionViewHolder.setOnClickListener(new QuestionViewHolder.IMyViewHolderClicks() {
                 public void onClickQuestionRow(View caller) {
                     mListener.onQuestionViewClick(questions.get(position));
                 }
@@ -86,7 +86,7 @@ public class ReportDetailsViewAdapter extends RecyclerView.Adapter<ReportDetails
             questionScaleRow.vQuestionAnswer.setText(String.valueOf(questionInRow.getRatingAnswer()) + "/" + String.valueOf(questionInRow.getRatingLimitHigher()));
             //TODO: change null to the view that you need to work with
             mListener.onQuestionViewInit(null);
-            questionViewHolder.setOnClickListener(new ReportDetailsViewAdapter.QuestionViewHolder.IMyViewHolderClicks() {
+            questionViewHolder.setOnClickListener(new QuestionViewHolder.IMyViewHolderClicks() {
                 public void onClickQuestionRow(View caller) {
                     mListener.onQuestionViewClick(questions.get(position));
                 }
