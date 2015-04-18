@@ -1,8 +1,13 @@
 packageName: com.henrychua.mydailyassessment
 modelName: Assessment
-numOfDifferentRowsInRecyclerView: 1
+numOfDifferentNavigationSections: 3
 differentRowsInViewAdapter: [
     {name: "Report", viewName: "report_row", position: 0, viewType:0, clickable: true }
 ]
 theme: red
 databaseVersion: 30
+feature-faq: true
+<@pp.dropOutputFile />
+<#if feature_faq == true>
+<@pp.changeOutputFile name=modelName+"ViewAdapter.java" />
+</#if>
