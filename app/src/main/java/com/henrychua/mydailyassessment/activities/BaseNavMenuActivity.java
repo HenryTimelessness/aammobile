@@ -18,6 +18,7 @@ import com.henrychua.mydailyassessment.fragments.NavDetailsFragment;
 import com.henrychua.mydailyassessment.fragments.NavFragment;
 import com.henrychua.mydailyassessment.fragments.NavigationDrawerFragment;
 import com.henrychua.mydailyassessment.fragments.QuestionsFragment;
+import com.henrychua.mydailyassessment.fragments.ReportDetailsFragment;
 import com.henrychua.mydailyassessment.fragments.ReportsFragment;
 import com.henrychua.mydailyassessment.helpers.MyApplication;
 import com.henrychua.mydailyassessment.models.Assessment;
@@ -33,6 +34,7 @@ public class BaseNavMenuActivity extends Activity  implements
         AssessmentsFragment.OnFragmentInteractionListener,
         ReportsFragment.OnFragmentInteractionListener,
         QuestionsFragment.OnFragmentInteractionListener,
+        ReportDetailsFragment.OnFragmentInteractionListener,
         NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     /**
@@ -176,8 +178,21 @@ public class BaseNavMenuActivity extends Activity  implements
 
 
     @Override
-    public void onReportClick(Assessment Assessment) {
-
+    public void onReportClick(Assessment assessment) {
+        // update the actionbar to show the up carat/affordance
+        mNavigationDrawerFragment.unDisplayActionBarNav();
+        // fragment transit to details, add to backstack
+        Toast.makeText(this, "clicked", Toast.LENGTH_LONG);
+        FragmentManager fragmentManager = getFragmentManager();
+        NavFragment fragment = ReportDetailsFragment.newInstance(assessment);
+        if (fragment != null) {
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.replace(R.id.fragment_container, fragment);
+            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+            transaction.addToBackStack(null);
+            transaction.commit();
+            this.setActionBarTitle(fragment.getFragmentTitle());
+        }
     }
 
     @Override
@@ -200,6 +215,16 @@ public class BaseNavMenuActivity extends Activity  implements
 
     @Override
     public void onQuestionClick(Question Question) {
+
+    }
+
+    @Override
+    public void onSaveAssessmentClicked() {
+        this.onBackPressed();
+    }
+
+    @Override
+    public void onReportQuestionClick(Question Question) {
 
     }
 

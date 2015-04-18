@@ -33,7 +33,7 @@ public class ReportsFragment extends NavFragment implements ReportsViewAdapter.O
      * activity.
      */
     public interface OnFragmentInteractionListener {
-        public void onReportClick(Assessment Assessment);
+        public void onReportClick(Assessment assessment);
     }
     private OnFragmentInteractionListener mListener;
 
@@ -64,15 +64,15 @@ public class ReportsFragment extends NavFragment implements ReportsViewAdapter.O
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View inflatedView = inflater.inflate(R.layout.fragment_assessment, container, false);
-        mRecyclerViewList = (RecyclerView) inflatedView.findViewById(R.id.assessmentList);
+        View inflatedView = inflater.inflate(R.layout.fragment_report, container, false);
+        mRecyclerViewList = (RecyclerView) inflatedView.findViewById(R.id.reports_List);
         mRecyclerViewList.setHasFixedSize(false);
         LinearLayoutManager llm = new LinearLayoutManager(this.getActivity());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerViewList.setLayoutManager(llm);
         // setup ui references
         mEmptyView = inflatedView.findViewById(R.id.emptyView);
-        mAssessmentView = inflatedView.findViewById(R.id.assessment_view);
+        mAssessmentView = inflatedView.findViewById(R.id.reports_view);
 
         // get from db the assessments
         AssessmentDBAdapter assessmentDBAdapter = new AssessmentDBAdapter(MyApplication.getAppContext());
