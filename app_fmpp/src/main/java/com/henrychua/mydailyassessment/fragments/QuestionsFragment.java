@@ -39,6 +39,7 @@ public class QuestionsFragment extends NavDetailsFragment implements QuestionsVi
      */
     public interface OnFragmentInteractionListener {
         public void onQuestionClick(Question Question);
+        public void onSaveAssessmentClicked();
     }
     private OnFragmentInteractionListener mListener;
 
@@ -129,6 +130,7 @@ public class QuestionsFragment extends NavDetailsFragment implements QuestionsVi
             Toast.makeText(MyApplication.getAppContext(), "Cannot save", Toast.LENGTH_LONG).show();
         } else {
             Toast.makeText(this.getActivity(), "Saved", Toast.LENGTH_LONG).show();
+            mListener.onSaveAssessmentClicked();
         }
         // callback to transit back to previous fragment
     }
@@ -255,7 +257,7 @@ public class QuestionsFragment extends NavDetailsFragment implements QuestionsVi
             checkAdapterIsEmpty(va);
         } else {
             // Remove all items from the ListAdapter, and then replace them with the new items
-//            QuestionsViewAdapter va = (QuestionsViewAdapter) this.mRecyclerViewList.getAdapter();
+//            ReportDetailsViewAdapter va = (ReportDetailsViewAdapter) this.mRecyclerViewList.getAdapter();
 //            va.replaceList(result);
         }
     }

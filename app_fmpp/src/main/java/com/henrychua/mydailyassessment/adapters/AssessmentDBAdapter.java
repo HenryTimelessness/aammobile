@@ -55,6 +55,7 @@ public class AssessmentDBAdapter {
                 contentValues.put("scale_answer", question.getRatingAnswer());
                 contentValues.put("multiple_choice_answer_id", -1);
                 contentValues.put("open_ended_answer", question.getOpenEndedAnswer());
+                contentValues.put("done_assessment_id", doneAssessmentId);
                 questionAnswersId = sqLiteDatabase.insert("question_answers", null, contentValues);
 
                 isTransactionSuccessful = (questionAnswersId > 0);
@@ -194,27 +195,29 @@ public class AssessmentDBAdapter {
     }
 
     /**
-     * Gets a list of questions of the assessment with its answers if they exist
-     * @param assessmentId
+     * Gets a list of questions of the assessment with its answers
+     * @param doneAssessmentId
      * @return
      */
-    public List<Question> getQuestionsAndAnswersInAssessment(int assessmentId) {
+    public List<Question> getQuestionsAndAnswersInDoneAssessment(int doneAssessmentId) {
         SQLiteDatabase sqLiteDatabase = assessmentDBHelper.getWritableDatabase();
         List<Question> questionList = new ArrayList<Question>();
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
         queryBuilder
-                .setTables("questions"
+                .setTables("question_answers"
+                        + " LEFT JOIN "
+                        + "done_assessments ON done_assessments.done_assessment_id = question_answers.done_assessment_id"
+                        + " LEFT JOIN "
+                        + "questions ON questions.question_id = question_answers.question_id"
                         + " LEFT JOIN "
                         + "question_types ON question_types.question_type_id = questions.question_type_id"
                         + " LEFT JOIN "
-                        + "scale_ranges ON scale_ranges.question_id = questions.question_id"
-                        + " LEFT JOIN "
-                        + "question_answers ON question_answers.question_id = questions.question_id");
+                        + "scale_ranges ON scale_ranges.question_id = questions.question_id");
 
         String[] columns = {"questions.question_id", "questions.content", "question_types.name", "scale_ranges.lower_limit", "scale_ranges.upper_limit",
                 "question_answers.scale_answer", "question_answers.open_ended_answer"};
         // Get cursor
-        Cursor cursor = queryBuilder.query(sqLiteDatabase, columns, "questions.assessment_id = " + String.valueOf(assessmentId), null, null, null, null);
+        Cursor cursor = queryBuilder.query(sqLiteDatabase, columns, "question_answers.done_assessment_id = " + String.valueOf(doneAssessmentId), null, null, null, null);
         while (cursor.moveToNext()) {
             int questionIdIndex = cursor.getColumnIndex("question_id");
             int questionContentIndex = cursor.getColumnIndex("content");
@@ -250,19 +253,21 @@ public class AssessmentDBAdapter {
                         + "assessments ON done_assessments.assessment_id = assessments.assessment_id");
 
 
-        String[] columns = {"done_assessments.assessment_id", "done_assessments.date", "assessments.title", "assessments.description"};
+        String[] columns = {"done_assessments.done_assessment_id", "done_assessments.assessment_id", "done_assessments.date", "assessments.title", "assessments.description"};
         // Get cursor
         Cursor cursor = queryBuilder.query(sqLiteDatabase, columns, null, null, null, null, null);
         while (cursor.moveToNext()) {
             int assessmentIdIndex = cursor.getColumnIndex("assessment_id");
+            int doneAssessmentIdIndex = cursor.getColumnIndex("done_assessment_id");
             int assessmentDoneDateIndex = cursor.getColumnIndex("date");
             int assessmentTitleIndex = cursor.getColumnIndex("title");
             int assessmentDescriptionIndex = cursor.getColumnIndex("description");
             int assessmentId = cursor.getInt(assessmentIdIndex);
+            int doneAssessmentId = cursor.getInt(doneAssessmentIdIndex);
             Date assessmentDoneDate = new Date(cursor.getLong(assessmentDoneDateIndex));
             String assessmentTitle = cursor.getString(assessmentTitleIndex);
             String assessmentDescription = cursor.getString(assessmentDescriptionIndex);
-            List<Question> questionList = getQuestionsAndAnswersInAssessment(assessmentId);
+            List<Question> questionList = getQuestionsAndAnswersInDoneAssessment(doneAssessmentId);
             assessmentList.add(new Assessment(assessmentTitle, assessmentDescription, false, false, null, assessmentDoneDate, questionList, assessmentId));
         }
         cursor.close();
@@ -275,7 +280,7 @@ public class AssessmentDBAdapter {
 
     static class AssessmentDBHelper extends SQLiteOpenHelper {
         private static final String DB_NAME = "assessments_db";
-        private static final int DB_VERSION_NUMBER = 20;
+        private static final int DB_VERSION_NUMBER = 25;
 
         //region SQL Statements to initialize tables or Drop tables
 
@@ -303,10 +308,10 @@ public class AssessmentDBAdapter {
                 ");";
 
         private static final String CREATE_DONE_ASSESSMENTS_TABLE = "CREATE TABLE done_assessments (\n" +
-                "done_assessments_id INTEGER,\n" +
+                "done_assessment_id INTEGER,\n" +
                 "assessment_id INTEGER,\n" +
                 "date TIMESTAMP,\n" +
-                "PRIMARY KEY (done_assessments_id),\n" +
+                "PRIMARY KEY (done_assessment_id),\n" +
                 "FOREIGN KEY (assessment_id) REFERENCES assessments(assessment_id)\n" +
                 ");";
 
@@ -321,14 +326,16 @@ public class AssessmentDBAdapter {
                 ");";
 
         private static final String CREATE_QUESTION_ANSWERS_TABLE = "CREATE TABLE question_answers (\n" +
-                "question_details_id INTEGER,\n" +
+                "question_answer_id INTEGER,\n" +
                 "question_id INTEGER,\n" +
                 "scale_answer DECIMAL,\n" +
                 "multiple_choice_answer_id INTEGER,\n" +
+                "done_assessment_id INTEGER,\n" +
                 "open_ended_answer TEXT,\n" +
-                "PRIMARY KEY (question_details_id)\n" +
+                "PRIMARY KEY (question_answer_id)\n" +
                 "FOREIGN KEY (question_id) REFERENCES questions(question_id),\n" +
-                "FOREIGN KEY (multiple_choice_answer_id) REFERENCES multiple_choice_answers(multiple_choice_answer_id)\n" +
+                "FOREIGN KEY (multiple_choice_answer_id) REFERENCES multiple_choice_answers(multiple_choice_answer_id),\n" +
+                "FOREIGN KEY (done_assessment_id) REFERENCES done_assessments(done_assessment_id)\n" +
                 ");";
 
         private static final String CREATE_SCALE_RANGES_TABLE = "CREATE TABLE scale_ranges (\n" +
@@ -497,11 +504,14 @@ public class AssessmentDBAdapter {
             //create test data
             List<Assessment> listOfAssessment = new ArrayList<Assessment>();
             List<Question> questions = new ArrayList<Question>();
+            List<Question> questions2 = new ArrayList<Question>();
 
-            questions.add(new Question("Titlez", "Some qns", Question.ANSWER_SCALE, 0.0, 10.0, 5.0, null, null, 0, false));
-            questions.add(new Question("Titlez2", "Some qns2", Question.ANSWER_OPEN_ENDED, 0.0, 0.0, 0.0, "This is an open ended answer", null, 0, false));
+            questions.add(new Question("Titlez", "scaleqns1", Question.ANSWER_SCALE, 0.0, 10.0, 5.0, null, null, 0, false));
+            questions.add(new Question("Titlez2", "openendedqns2", Question.ANSWER_OPEN_ENDED, 0.0, 0.0, 0.0, "This is an open ended answer 2", null, 0, false));
+            questions2.add(new Question("Titlez2", "scaleqns3", Question.ANSWER_SCALE, 0.0, 15.0, 3.0, null, null, 0, false));
+            questions2.add(new Question("Titlez2", "openendedqns4", Question.ANSWER_OPEN_ENDED, 0.0, 0.0, 0.0, "This is an open ended answer 4", null, 0, false));
             Assessment assessment1 = new Assessment("PANAS", "A PANAS test", true, true, new Customer("Chua", 123456789, "string@string.com", null), new Date(), questions);
-            Assessment assessment2 = new Assessment("PANASShort", "A PANASShort test", true, true, new Customer("Chua", 123456789, "string@string.com", null), new Date(), questions);
+            Assessment assessment2 = new Assessment("PANASShort", "A PANASShort test", true, true, new Customer("Chua", 123456789, "string@string.com", null), new Date(), questions2);
             listOfAssessment.add(assessment1);
             listOfAssessment.add(assessment2);
             for (Assessment assessment : listOfAssessment) {
