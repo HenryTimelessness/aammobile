@@ -31,9 +31,10 @@ import com.henrychua.mydailyassessment.models.DrawerItem;
  * design guidelines</a> for a complete explanation of the behaviors implemented here.
  */
 public class NavigationDrawerFragment extends Fragment {
-    private static final int NUM_OF_SECTIONS = 2;
+    private static final int NUM_OF_SECTIONS = 3;
     private static final int POSITION_ASSESSMENTSFRAGMENT = 0;
     private static final int POSITION_REPORTS_FRAGMENT = 1;
+    private static final int POSITION_FAQ_FRAGMENT = 2;
 
     /**
      * Remember the position of the selected item.
@@ -107,6 +108,7 @@ public class NavigationDrawerFragment extends Fragment {
         //TODO: CHANGE ICONS FOR SELECTED AND NON SELECTED
         drawerItem[POSITION_ASSESSMENTSFRAGMENT] = new DrawerItem(R.drawable.report_icon, R.drawable.report_icon, "Assessments", true);
         drawerItem[POSITION_REPORTS_FRAGMENT] = new DrawerItem(R.drawable.report_icon, R.drawable.report_icon, "Reports", false);
+        drawerItem[POSITION_FAQ_FRAGMENT] = new DrawerItem(R.drawable.report_icon, R.drawable.report_icon, "FAQ", false);
 
         LinearLayout drawerView = (LinearLayout) inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
         mDrawerListView = (ListView) drawerView.findViewById(R.id.drawer_list_view);

@@ -1,0 +1,22 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp"
+    tools:context="sg.com.bumbox.fragments.HelpFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:textColor="@color/app_blue"
+        android:padding="6dp"
+        android:text="How to use the app?" />
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:padding="6dp"
+        android:text="1) Go to Assessments using the Navigation Drawer at the top left" />
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:padding="6dp"
+        android:text="2) Click on an Assessment to start doing it" />
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:padding="6dp"
+        android:text="3) Go to Reports in the Navigation Drawer at the top left and view your Report" />
+</LinearLayout>

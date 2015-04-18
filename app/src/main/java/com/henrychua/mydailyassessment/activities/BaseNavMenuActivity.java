@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 import com.henrychua.mydailyassessment.R;
 import com.henrychua.mydailyassessment.adapters.AssessmentDBAdapter;
 import com.henrychua.mydailyassessment.fragments.AssessmentsFragment;
+import com.henrychua.mydailyassessment.fragments.FAQFragment;
 import com.henrychua.mydailyassessment.fragments.NavDetailsFragment;
 import com.henrychua.mydailyassessment.fragments.NavFragment;
 import com.henrychua.mydailyassessment.fragments.NavigationDrawerFragment;
@@ -35,6 +37,7 @@ public class BaseNavMenuActivity extends Activity  implements
         ReportsFragment.OnFragmentInteractionListener,
         QuestionsFragment.OnFragmentInteractionListener,
         ReportDetailsFragment.OnFragmentInteractionListener,
+        FAQFragment.OnFragmentInteractionListener,
         NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     /**
@@ -119,6 +122,9 @@ public class BaseNavMenuActivity extends Activity  implements
                 break;
             case 1:
                 fragment = new ReportsFragment();
+                break;
+            case 2:
+                fragment = new FAQFragment();
                 break;
             default:
                 break;
@@ -225,6 +231,11 @@ public class BaseNavMenuActivity extends Activity  implements
 
     @Override
     public void onReportQuestionClick(Question Question) {
+
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
 
     }
 
