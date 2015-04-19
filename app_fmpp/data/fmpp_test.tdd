@@ -1,0 +1,7 @@
+packageName: com.henrychua.mydailyassessment
+numOfDifferentNavigationSections: 2
+databaseVersion: 27
+theme: blue
+feature_faq: false
+feature_panas: false
+feature_panas_short: true

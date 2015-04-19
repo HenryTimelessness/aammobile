@@ -501,19 +501,15 @@ public class AssessmentDBAdapter {
 
             //TODO: Add in Assessments you wanna initialize with
 
-            //create test data
+            //create assessment data
             List<Assessment> listOfAssessment = new ArrayList<Assessment>();
-            List<Question> questions = new ArrayList<Question>();
-            List<Question> questions2 = new ArrayList<Question>();
 
-            questions.add(new Question("Titlez", "scaleqns1", Question.ANSWER_SCALE, 0.0, 10.0, 5.0, null, null, 0, false));
-            questions.add(new Question("Titlez2", "openendedqns2", Question.ANSWER_OPEN_ENDED, 0.0, 0.0, 0.0, "This is an open ended answer 2", null, 0, false));
-            questions2.add(new Question("Titlez2", "scaleqns3", Question.ANSWER_SCALE, 0.0, 15.0, 3.0, null, null, 0, false));
-            questions2.add(new Question("Titlez2", "openendedqns4", Question.ANSWER_OPEN_ENDED, 0.0, 0.0, 0.0, "This is an open ended answer 4", null, 0, false));
-            Assessment assessment1 = new Assessment("PANAS", "A PANAS test", true, true, new Customer("Chua", 123456789, "string@string.com", null), new Date(), questions);
+                        List<Question> questions2 = new ArrayList<Question>();
+            questions2.add(new Question("Title3", "scaleqns3", Question.ANSWER_SCALE, 0.0, 15.0, 3.0, null, null, 0, false));
+            questions2.add(new Question("Title4", "openendedqns4", Question.ANSWER_OPEN_ENDED, 0.0, 0.0, 0.0, "This is an open ended answer 4", null, 0, false));
             Assessment assessment2 = new Assessment("PANASShort", "A PANASShort test", true, true, new Customer("Chua", 123456789, "string@string.com", null), new Date(), questions2);
-            listOfAssessment.add(assessment1);
             listOfAssessment.add(assessment2);
+
             for (Assessment assessment : listOfAssessment) {
                 this.createNewAssessment(assessment, db);
             }

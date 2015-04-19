@@ -1,9 +1,9 @@
 packageName: com.henrychua.mydailyassessment
 modelName: Assessment
-numOfDifferentNavigationSections: 3
+numOfDifferentNavigationSections: 2
 differentRowsInViewAdapter: [
     {name: "Report", viewName: "report_row", position: 0, viewType:0, clickable: true }
 ]
 theme: red
 databaseVersion: 30
-feature_faq: true
+feature_faq: false
