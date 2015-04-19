@@ -12,7 +12,7 @@ import com.henrychua.mydailyassessment.R;
 /**
  * A simple {@link android.app.Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link FAQFragment.OnFragmentInteractionListener} interface
+ * {@link com.henrychua.mydailyassessment.fragments.FAQFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
  */
 public class FAQFragment extends NavFragment {

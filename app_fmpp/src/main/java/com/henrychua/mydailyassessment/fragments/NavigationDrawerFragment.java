@@ -34,6 +34,7 @@ public class NavigationDrawerFragment extends Fragment {
     private static final int NUM_OF_SECTIONS = ${numOfDifferentNavigationSections};
     private static final int POSITION_ASSESSMENTSFRAGMENT = 0;
     private static final int POSITION_REPORTS_FRAGMENT = 1;
+    <#if feature_faq == true>private static final int POSITION_FAQ_FRAGMENT = 2;</#if>
 
     /**
      * Remember the position of the selected item.

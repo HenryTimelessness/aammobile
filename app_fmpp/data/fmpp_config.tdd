@@ -6,8 +6,4 @@ differentRowsInViewAdapter: [
 ]
 theme: red
 databaseVersion: 30
-feature-faq: true
-<@pp.dropOutputFile />
-<#if feature_faq == true>
-<@pp.changeOutputFile name=modelName+"ViewAdapter.java" />
-</#if>
+feature_faq: true

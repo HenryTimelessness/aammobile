@@ -37,7 +37,7 @@ public class BaseNavMenuActivity extends Activity  implements
         ReportsFragment.OnFragmentInteractionListener,
         QuestionsFragment.OnFragmentInteractionListener,
         ReportDetailsFragment.OnFragmentInteractionListener,
-        FAQFragment.OnFragmentInteractionListener,
+       FAQFragment.OnFragmentInteractionListener,
         NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     /**
@@ -123,7 +123,7 @@ public class BaseNavMenuActivity extends Activity  implements
             case 1:
                 fragment = new ReportsFragment();
                 break;
-            case 2:
+           case 2:
                 fragment = new FAQFragment();
                 break;
             default:
@@ -234,11 +234,10 @@ public class BaseNavMenuActivity extends Activity  implements
 
     }
 
-    @Override
+   @Override
     public void onFragmentInteraction(Uri uri) {
 
     }
-
 //    @Override
 //    public void onParcelClick(BumboxParcel bumboxParcel, Station station) {
 //        // update the actionbar to show the up carat/affordance
